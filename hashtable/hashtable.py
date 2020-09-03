@@ -80,13 +80,15 @@ class HashTable:
 
         Implement this.
         """
-        # if self.capacity[index] exist
-        #   use linked list to set next to the repeated key and value
     
         index = self.hash_index(key)
         if self.capacity[index] == None:
             # store key value pair
             self.capacity[index] = key
+            self.value[index] = value
+        # if self.capacity[index] exist
+        #   use linked list to set next to the repeated key and value
+        if self.capacity[index] == key:
             self.value[index] = value
         return self.capacity[index]
 
