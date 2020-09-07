@@ -1,6 +1,3 @@
-from linked_list import LinkedList
-from linked_list import Node
-
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -148,21 +145,18 @@ class HashTable:
         Implement this.
         """
         # downsize
-        if self.get_load_factor() > 0.2:
+        if self.get_load_factor() < 0.2:
             print("Downsize")
             new_capacity = self.size / 2
             return new_capacity
         else:
-            print('make bigger')
             self.size = self.size * 2
-            print("self.size is now ", self.size)
             new_capacity = [None] * self.size
-            # rehash all the keys in hashtable
-            # self.put
+            # loop through old hashtable
             for key in self.capacity:
-                keys = self.get(key)
-                return keys
-            print(keys)
+                print('key in old hashtable', key)
+            # rehash all the keys in hashtable
+            # self.put(key)
             print("new_capacity is now ", new_capacity)
             return new_capacity
 
