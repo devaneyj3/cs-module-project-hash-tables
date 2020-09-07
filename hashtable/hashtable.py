@@ -1,3 +1,6 @@
+from linked_list import LinkedList
+from linked_list import Node
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -83,9 +86,9 @@ class HashTable:
     
         index = self.hash_index(key)
         if self.capacity[index] == None:
-            # store key value pair
-            self.capacity[index] = key
-            self.value[index] = value
+            # store key value pair as node
+            self.capacity[index] = Node(key)
+            self.value[index] = Node(value)
         # if self.capacity[index] exist
         #   use linked list to set next to the repeated key and value
         if self.capacity[index] == key:
@@ -117,7 +120,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        if key not in self.capacity:
+        if Node(key) not in self.capacity:
             return None
         item = self.hash_index(key)
         return self.value[item]
