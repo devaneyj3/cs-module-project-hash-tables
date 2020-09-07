@@ -62,20 +62,3 @@ class LinkedList:
             existingNode.value = node.value
         else:
             self.add_to_head(node)
-            
-            
-a = Node(5)
-b = Node(6)
-c = Node(7)
-d = Node(8)
-e = Node(9)
-f = Node(11)
-l = LinkedList()
-l.add_to_head(a)
-l.add_to_head(b)
-l.add_to_head(c)
-l.add_to_head(d)
-l.add_to_head(e)
-l.delete(9)
-l.insert_or_overwrite(f)
-print(l)
