@@ -27,6 +27,7 @@ class HashTable:
         self.size = 11
         self.capacity = [None] * self.size
         self.count = 0
+        self.entries = []
         
     def __repr__(self):
         return str(self.capacity) 
@@ -44,6 +45,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        print('self.capacity is,', len(self.capacity))
         return len(self.capacity)
 
 
@@ -103,6 +105,7 @@ class HashTable:
         else:
             self.capacity[index] = node
         # print('adding node', node.next)
+        self.entries.append(node)
         return self.capacity[index]
 
 
@@ -146,19 +149,18 @@ class HashTable:
         """
         # downsize
         if self.get_load_factor() < 0.2:
-            print("Downsize")
             new_capacity = self.size / 2
             return new_capacity
         else:
             self.size = self.size * 2
             new_capacity = [None] * self.size
-            # loop through old hashtable
-            for key in self.capacity:
-                print('key in old hashtable', key)
-            # rehash all the keys in hashtable
-            # self.put(key)
-            print("new_capacity is now ", new_capacity)
-            return new_capacity
+            self.capacity = new_capacity
+            print("sel.capacity is now ", self.capacity)
+            # get key to rehash and value to correspond to key
+            # for entry in self.entries:
+            #     # print('key in old hashtable', entry.key, entry.value)
+            #     self.put(entry.key, entry.value)
+            #     # rehash all the keys in hashtable
 
 
 if __name__ == "__main__":
@@ -174,12 +176,9 @@ if __name__ == "__main__":
     ht.put("key-7", "val-7")
     ht.put("key-8", "val-8")
     ht.put("key-9", "val-9")
-    
-    print(ht)
-
     # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f'line-{i}'))
+    # for i in range(1, 13):
+    #     print(ht.get(f'line-{i}'))
 
     # Test resizing
     old_capacity = ht.get_num_slots()
