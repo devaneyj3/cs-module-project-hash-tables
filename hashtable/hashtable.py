@@ -24,10 +24,10 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        self.size = 11
-        self.capacity = [None] * self.size
+        self.capacity = MIN_CAPACITY
+        self.table = [None] * self.capacity
         self.count = 0
-        self.entries = []
+
         
     def __repr__(self):
         return str(self.capacity) 
@@ -45,8 +45,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        print('self.capacity is,', len(self.capacity))
-        return len(self.capacity)
+        return len(self.table)
 
 
     def get_load_factor(self):
@@ -56,7 +55,7 @@ class HashTable:
         Implement this.
         """
         # keys / total number of objects the hash table can store
-        return self.count / len(self.capacity)
+        return self.count / len(self.table)
 
     def djb2(self, key):
         """
@@ -76,7 +75,7 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        return self.djb2(key) % self.size
+        return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -86,27 +85,26 @@ class HashTable:
 
         Implement this.
         """
-    
         index = self.hash_index(key)
         # store as linked list node
         node = HashTableEntry(key, value)
-        
-        key = self.capacity[index]
+        # print(node)
+        key = self.table[index]
         
         self.count += 1
         
         # the key exist
         if key:
             # overwrite with the node
-            self.capacity[index] = node
-            self.capacity[index].next = key
+            self.table[index] = node
+            self.table[index].next = key
         # if self.capacity[index] exist
         #   use linked list to set next to the repeated key and value
         else:
-            self.capacity[index] = node
+            self.table[index] = node
         # print('adding node', node.next)
-        self.entries.append(node)
-        return self.capacity[index]
+        print(self.table)
+        return self.table[index]
 
 
 
@@ -132,7 +130,7 @@ class HashTable:
         """
         item = self.hash_index(key)
         
-        storage = self.capacity[item]
+        storage = self.table[item]
         
         while storage:
             if storage.key == key:
@@ -147,20 +145,36 @@ class HashTable:
 
         Implement this.
         """
+        self.capacity = new_capacity
         # downsize
         if self.get_load_factor() < 0.2:
-            new_capacity = self.size / 2
-            return new_capacity
-        else:
-            self.size = self.size * 2
-            new_capacity = [None] * self.size
+            new_capacity //= 2
             self.capacity = new_capacity
-            print("sel.capacity is now ", self.capacity)
+            old_table = self.table
+            self.table = [None]*self.capacity
+            #Traverse the old table and pass each previous val into the put method of our new empty table
+            for node in old_table:
+                while True:
+                    if node != None:
+                        self.put(node.key, node.value)
+                        if node.next == None:
+                            break
+                        node = node.next
+                    else: break
+        if self.get_load_factor() > 0.7:
+            # new_capacity *= 2
+            self.capacity = new_capacity
             # get key to rehash and value to correspond to key
-            # for entry in self.entries:
-            #     # print('key in old hashtable', entry.key, entry.value)
-            #     self.put(entry.key, entry.value)
-            #     # rehash all the keys in hashtable
+            old_table = self.table
+            self.table = [None] * self.capacity
+            for node in old_table:
+                while True:
+                    if node != None:
+                        self.put(node.key, node.value)
+                        if node.next == None:
+                            break
+                        node = node.next
+                    else: break
 
 
 if __name__ == "__main__":
@@ -176,9 +190,15 @@ if __name__ == "__main__":
     ht.put("key-7", "val-7")
     ht.put("key-8", "val-8")
     ht.put("key-9", "val-9")
+    ht.put("key-10", "val-10")
+    ht.put("key-11", "val-11")
+    ht.put("key-12", "val-12")
+    # print(ht.get("key-12"))
     # Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(ht.get(f'line-{i}'))
+    for i in range(1, 13):
+        print(ht.get(f'line-{i}'))
+        
+    print(ht)
 
     # Test resizing
     old_capacity = ht.get_num_slots()
@@ -188,4 +208,4 @@ if __name__ == "__main__":
     print('Resized from', old_capacity, 'to', new_capacity)
 
 
-    print("")
+    # print("")
