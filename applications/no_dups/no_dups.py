@@ -1,5 +1,17 @@
+import re 
 def no_dups(s):
-    # Your code here
+    no_repeats = {}
+    # seperate into an array
+    seperate = re.split('\s+', s)
+    for word in seperate:
+        # check if the subsequent word is not in no_repeats and add to 
+        if word not in no_repeats:
+            no_repeats[word] = word
+        # if words are the same, force it to check again
+        else: continue
+    # convert into string on commas and replace commas with space
+    no_repeats = ','.join(no_repeats).replace(',', ' ')
+    return no_repeats
 
 
 
