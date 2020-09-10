@@ -79,6 +79,6 @@ full-featured.)
 Pass * [No Duplicates](applications/no_dups/)
 * [Markov Chains](applications/markov/)
 Pass * [Histogram](applications/histo/)
-* [Cracking Caesar Ciphers](applications/crack_caesar/)
+Pass * [Cracking Caesar Ciphers](applications/crack_caesar/)
 * [Sum and Difference](applications/sumdiff/)
 
