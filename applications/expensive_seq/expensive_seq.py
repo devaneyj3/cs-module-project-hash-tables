@@ -1,10 +1,37 @@
-# Your code here
-
-
+table = {}
 def expensive_seq(x, y, z):
-    # Your code here
-        if x <= 0: y + z
-        if x >  0: expensive_seq(x-1,y+1,z) + expensive_seq(x-2,y+2,z*2) + expensive_seq(x-3,y+3,z*3)
+    if x <= 0:
+        return y + z
+    if (x, y, z) not in table:
+        table[(x, y, z)] = (
+            expensive_seq(x - 1, y + 1, z)
+            + expensive_seq(x - 2, y + 2, z * 2)
+            + expensive_seq(x - 3, y + 3, z * 3)
+        )
+    return table[(x, y, z)]
+# # Your code here
+# def expensive_seq(x, y, z, ht={}):
+#     # Your code here
+#     if ht is None:
+#         ht = dict(1000000)
+#     key = f'{x}x{y}y{z}z'
+#     value = ht.get(key)
+#     if (x, y, z) in ht:
+#         return ht[(x, y, z)]
+#     if x <= 0:
+#         return y + z
+#     if x > 0:
+#         value = expensive_seq(x - 1, y + 1, z, ht) + expensive_seq(x - 2, y + 2, z * 2, ht) + expensive_seq(x - 3, y + 3, z * 3, ht)
+#         ht.put(key, value)
+#         ht[(x, y, z)] = expensive_seq(x - 1, y + 1, z, ht) + expensive_seq(x - 2, y + 2, z * 2, ht) + expensive_seq(x - 3, y + 3, z * 3, ht)
+#     return ht[(x, y, z)]
+
+# my_dict = {}
+
+# def expensive_seq(x, y, z):
+#     if x <= 0:
+#         return y + z
+#     return (expensive_seq(x-1, y+1, z) + expensive_seq(x-2, y+2, z*2) + expensive_seq(x-3, y+3, z*3))
 
 
 if __name__ == "__main__":
